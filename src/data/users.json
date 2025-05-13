@@ -1,0 +1,12 @@
+[
+  {
+    "email": "ankit@gm.com",
+    "password": "$2b$10$alvxayZJI779zxzi3xrwAOGoAuWK2HZdN35n/fNlcZlKa1rn6yVva",
+    "user_type": "partner"
+  },
+  {
+    "email": "anuj@gm.com",
+    "password": "$2b$10$MtzwkHfZBjcOjC5NYtSMe.rTnE//7eLWHsnnJGTvo/5dQo38jnTDe",
+    "user_type": "individual"
+  }
+]

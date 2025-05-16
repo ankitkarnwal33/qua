@@ -48,6 +48,10 @@ export default function Signup() {
         setError("Please enter mobile number.");
         return;
       }
+      if (phone.length !== 10) {
+        setError("Mobile number should be 10 digits long.");
+        return;
+      }
       setError("");
 
       const response = fetch("/api/auth/signuppart", {

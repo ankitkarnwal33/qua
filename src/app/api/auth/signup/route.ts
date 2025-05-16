@@ -1,7 +1,9 @@
-import { findUserByEmail, saveUser } from "@/lib/userService";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { findUserByEmail, findUserByPhone, saveUser } from "@/lib/userService";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { query } from "@/lib/db";
 
 type User = {
   email: string;
@@ -9,6 +11,7 @@ type User = {
   user_type: string;
   phone: string;
   name: string;
+  otp: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -19,8 +22,25 @@ export async function POST(req: NextRequest) {
       user_type = "individual",
       phone,
       name,
+      otp,
     }: User = await req.json();
 
+    const userOtp: any = await query(
+      "SELECT * from users_otp WHERE mobile = ?",
+      [phone]
+    );
+    console.log(userOtp);
+    if (+userOtp[0]?.OTP !== +otp) {
+      return NextResponse.json({ message: "Invalid OTP." }, { status: 400 });
+    }
+
+    await query("DELETE from users_otp WHERE mobile = ?", [phone]);
+    if (await findUserByPhone(phone)) {
+      return NextResponse.json(
+        { message: "User already exists" },
+        { status: 400 }
+      );
+    }
     if (await findUserByEmail(email)) {
       return NextResponse.json(
         { message: "User already exists" },

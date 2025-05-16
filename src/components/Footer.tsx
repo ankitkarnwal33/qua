@@ -16,37 +16,46 @@ const Footer = () => {
             <Link href={"#"}>Privacy Policy</Link>
           </li>
           <li>
-            <Link href={"#"}>Terms of Service</Link>
+            <Link href={"/legal/termsandconditions"}>Terms of Service</Link>
           </li>
         </ul>
         <ul className=" flex gap-4 items-center">
           <li>
-            <Link href={"#"}>
+            <Link
+              href={"https://www.facebook.com/ryanfernando/"}
+              target="__blank"
+            >
               <Image
-                src={"/icons/facebook.svg"}
+                src={"/icons/Facebook.svg"}
                 width={20}
                 height={20}
-                alt="facebook"
+                alt="Facebook"
               />
             </Link>
           </li>
           <li>
-            <Link href={"#"}>
+            <Link
+              href={"https://www.instagram.com/ryan_nutrition_coach/"}
+              target="__blank"
+            >
               <Image
                 src={"/icons/Insta.svg"}
                 width={20}
                 height={20}
-                alt="facebook"
+                alt="Instagram"
               />
             </Link>
           </li>
           <li>
-            <Link href={"#"}>
+            <Link
+              href={"https://www.linkedin.com/in/ryanfernando/"}
+              target="__blank"
+            >
               <Image
                 src={"/icons/Linkedin.svg"}
                 width={20}
                 height={20}
-                alt="facebook"
+                alt="Linkedin"
               />
             </Link>
           </li>

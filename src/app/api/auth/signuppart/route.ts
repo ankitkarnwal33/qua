@@ -1,4 +1,8 @@
-import { findUserByEmail, saveUserPartner } from "@/lib/userService";
+import {
+  findUserByEmail,
+  findUserByPhone,
+  saveUserPartner,
+} from "@/lib/userService";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
@@ -26,6 +30,13 @@ export async function POST(req: NextRequest) {
       contactPerson,
       partnerType,
     }: User = await req.json();
+
+    if (await findUserByPhone(phone)) {
+      return NextResponse.json(
+        { message: "User already exists" },
+        { status: 400 }
+      );
+    }
 
     if (await findUserByEmail(email)) {
       return NextResponse.json(

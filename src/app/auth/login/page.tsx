@@ -115,7 +115,10 @@ export default function Login() {
             </button>
 
             <div className="flex justify-between">
-              <Link href={"#"} className=" text-blue-800 underline">
+              <Link
+                href={"/auth/forgetpassword"}
+                className=" text-blue-800 underline"
+              >
                 forgot password ?
               </Link>
               <Link href={"/"} className=" text-blue-800 underline">

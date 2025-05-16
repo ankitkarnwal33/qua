@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function LoginSkeleton() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#fff5f0] to-[#f9e8e8] p-6">
-      <div className="w-full max-w-sm mx-auto">
+      <div className="w-full max-w-md mx-auto">
         {/* Title */}
         <Skeleton className="h-10 w-3/4 mx-auto mb-8" />
         {/* Card */}

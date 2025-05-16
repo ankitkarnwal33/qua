@@ -100,6 +100,23 @@ export const findUserByEmail = async (email: string) => {
   }
 };
 
+export const findUserByPhone = async (phone: string) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [user]: any = await query("SELECT * FROM users WHERE phone = ?", [
+      phone,
+    ]);
+    if (user === undefined) {
+      return false;
+    }
+    return user;
+  } catch (error) {
+    if (error instanceof Error) {
+    }
+    return false;
+  }
+};
+
 // Store clients
 
 export const saveClient = async (user: Client) => {

@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -32,7 +34,8 @@ export default function WithdrawalForm({
   const [upiId, setUpiId] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string>("");
-
+  const [agree, setAgree] = useState<boolean>(false);
+  console.log(agree);
   const mutation = useMutation({
     mutationFn: async (transaction: Transaction) => {
       const res = await fetch("/api/transaction/withdraw", {
@@ -78,6 +81,10 @@ export default function WithdrawalForm({
     if (+currentAmount < +amount) {
       setError("");
       return toast.error("Insufficient Balance 😢");
+    }
+    if (!agree) {
+      setError("");
+      return toast.error("Please confirm the withdrawal.");
     }
     setError("");
 
@@ -146,6 +153,17 @@ export default function WithdrawalForm({
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Enter any message or instructions"
           />
+        </div>
+
+        <div className="flex space-x-3 md:col-span-2">
+          <Checkbox
+            id="agree"
+            className="border border-[#1369B1]"
+            onCheckedChange={() => setAgree(!agree)}
+          />
+          <Label htmlFor="agree" className="text-[#020817]">
+            I confirm that the UPI ID entered is mine and valid.
+          </Label>
         </div>
 
         {/* Submit Button */}

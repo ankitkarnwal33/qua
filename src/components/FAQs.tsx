@@ -13,16 +13,18 @@ import { motion, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     question: "How do I get paid?",
-    answer: "Payments are processed monthly via bank transfer or UPI.",
+    answer:
+      "Payments are processed monthly via UPI. Once your referral completes their registration and payment for a QUA Nutrition plan, your reward will be reflected on your dashboard. You can then request a payout through UPI.",
   },
   {
     question: "What qualifies as a successful referral?",
     answer:
-      "A successful referral is when someone signs up and completes a qualifying action.",
+      "A referral is considered successful when the person you referred completes their registration and purchases a personalized QUA Nutrition plan. Only valid and completed transactions are eligible for rewards.",
   },
   {
     question: "How quickly does status update?",
-    answer: "Status is updated within 24-48 hours of the referral’s action.",
+    answer:
+      "Status is updated within 24–48 hours of the referral’s action. In many cases, updates are instant.",
   },
   {
     question: "Can I promote the program on social media?",
@@ -31,67 +33,12 @@ const faqs = [
   },
   {
     question: "Is there a limit to referrals?",
-    answer: "No, you can refer as many people as you like.",
-  },
-  {
-    question: "Where can I find marketing assets?",
-    answer: "They are available in your dashboard after signing up.",
-  },
-  {
-    question: "How do I get paid?",
-    answer: "Payments are processed monthly via bank transfer or UPI.",
-  },
-  {
-    question: "What qualifies as a successful referral?",
     answer:
-      "A successful referral is when someone signs up and completes a qualifying action.",
-  },
-  {
-    question: "How quickly does status update?",
-    answer: "Status is updated within 24-48 hours of the referral’s action.",
-  },
-  {
-    question: "Can I promote the program on social media?",
-    answer:
-      "Yes, feel free to use your referral link on any social media platform.",
-  },
-  {
-    question: "Is there a limit to referrals?",
-    answer: "No, you can refer as many people as you like.",
-  },
-  {
-    question: "Where can I find marketing assets?",
-    answer: "They are available in your dashboard after signing up.",
-  },
-  {
-    question: "How do I get paid?",
-    answer: "Payments are processed monthly via bank transfer or UPI.",
-  },
-  {
-    question: "What qualifies as a successful referral?",
-    answer:
-      "A successful referral is when someone signs up and completes a qualifying action.",
-  },
-  {
-    question: "How quickly does status update?",
-    answer: "Status is updated within 24-48 hours of the referral’s action.",
-  },
-  {
-    question: "Can I promote the program on social media?",
-    answer:
-      "Yes, feel free to use your referral link on any social media platform.",
-  },
-  {
-    question: "Is there a limit to referrals?",
-    answer: "No, you can refer as many people as you like.",
-  },
-  {
-    question: "Where can I find marketing assets?",
-    answer: "They are available in your dashboard after signing up.",
+      "No, you can refer as many people as you like. The more referrals you bring in, the more rewards you earn!",
   },
 ];
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 7;
 
 export function FaqSection() {
   const [page, setPage] = useState(1);

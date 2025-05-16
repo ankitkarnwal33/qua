@@ -14,11 +14,15 @@ export default async function Home() {
       <section className="gradient-4 rounded-3xl mt-4 px-10 py-16 flex flex-col-reverse lg:flex-row items-center justify-between max-w-7xl mx-auto">
         <div className="lg:w-1/2 text-center lg:text-left">
           <h2 className="text-3xl md:text-4xl font-bold text-[#2F2F2F] mb-6">
-            Earn While You Help Others <br /> Live Healthier
+            Turn Your Network into a Healthier, Happier Community - and Get
+            Rewarded!
           </h2>
           <p className="text-[#2F2F2F] mb-8">
-            Join Quanutrition&apos;s Referral & Partner Program to share
-            personalized nutrition plans and get rewarded.
+            Join QUA Nutrition’s Referral & Partner Program to share
+            personalized nutrition plans backed by science. Whether you&#39;re
+            an individual who believes in healthy living or a business looking
+            to empower your audience - you can earn incentives while helping
+            others achieve their wellness goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link
@@ -68,7 +72,7 @@ export default async function Home() {
               Cash Incentives
             </h3>
             <p className="text-sm  text-[#F5EAD7]">
-              Earn minimum ₹150 for every successful referral.
+              Earn ₹500 for every successful referral - no limits!
             </p>
           </div>
 
@@ -88,7 +92,7 @@ export default async function Home() {
               Flexible Participation
             </h3>
             <p className="text-sm  text-[#F5EAD7]">
-              Refer one friend or hundreds without any limit.
+              Refer one friend or a hundred ,it&#39;s up to you.
             </p>
           </div>
 
@@ -108,7 +112,7 @@ export default async function Home() {
               Dedicated Support
             </h3>
             <p className="text-sm  text-[#F5EAD7]">
-              Access marketing assets & 24/7 chat support.
+              Get 24/7 chat support plus ready-to-use marketing materials.
             </p>
           </div>
         </div>
@@ -127,7 +131,7 @@ export default async function Home() {
                 Sign Up as Individual or Partner
               </h3>
               <p className="text-sm text-[#4B5563]">
-                Create your account and get access to your referral dashboard.
+                Create your account and access your personal referral dashboard.
               </p>
             </div>
 
@@ -151,7 +155,7 @@ export default async function Home() {
                 Track Status & Earn Rewards
               </h3>
               <p className="text-sm text-[#4B5563]">
-                Monitor your referrals and receive payments for conversions.
+                Watch your referrals grow and receive ₹500 for each conversion.
               </p>
             </div>
           </div>

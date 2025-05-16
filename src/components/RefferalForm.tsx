@@ -61,9 +61,10 @@ export default function RefferalForm({ id }: { id: string }) {
       });
       // Optionally reset fields here
     },
-    onError: (err: any) => {
+    onError: (err: any, _, context) => {
       toast.error("Referral failed.", {
         description: err.message || "Something went wrong.",
+        id: context?.toastId,
       });
     },
   });

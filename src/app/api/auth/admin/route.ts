@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { query } from "@/lib/db";
 
@@ -9,9 +8,6 @@ export async function POST(req: NextRequest) {
   const [user]: any = await query("SELECT * FROM admin WHERE email = ?", [
     email,
   ]);
-  if (user === undefined) {
-    return false;
-  }
   if (!user) {
     return NextResponse.json(
       { message: "Invalid credentials" },
@@ -19,8 +15,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const passwordMatch = await bcrypt.compare(password, user?.password);
-
+  // const passwordMatch = await bcrypt.compare(password, user?.password);
+  const passwordMatch = password === user?.password;
   if (!passwordMatch) {
     return NextResponse.json(
       { message: "Invalid credentials" },
@@ -28,7 +24,7 @@ export async function POST(req: NextRequest) {
     );
   }
   const token = jwt.sign(
-    { email: user?.email, user_type: user?.user_type, id: user?.id },
+    { email: user?.email, user_type: user?.role, id: user?.id },
     process.env.JWT_SECRET!,
     { expiresIn: "4h" }
   );

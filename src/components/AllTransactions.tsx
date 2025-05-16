@@ -15,6 +15,8 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "./ui/skeleton";
 import formatDate from "@/lib/formatDate";
+import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type User = {
   id: number;
@@ -23,9 +25,10 @@ type User = {
   amount: string;
   created_at: string;
   status: string;
+  action: string;
 };
 
-export default function Transactions({
+export default function AllTransactions({
   data,
   isLoading,
 }: {
@@ -35,12 +38,113 @@ export default function Transactions({
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof User>("id");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const queryClient = useQueryClient();
+  // Update the transactions status to paid and make the changes on user account
+  interface Trans {
+    id: string;
+    user_id: string;
+    user_type: string;
+    amount: string;
+    status: "completed";
+  }
+  const mutationPaid = useMutation({
+    mutationFn: async (transactionData: Trans) => {
+      const res = await fetch("/api/admin/payincentive", {
+        method: "POST",
+        body: JSON.stringify(transactionData),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+      return data;
+    },
+    onMutate: () => {
+      const toastId = toast.loading(`Please wait...`);
+      return { toastId };
+    },
+    onSuccess: (data, _, context) => {
+      queryClient.invalidateQueries({ queryKey: ["alltransactions"] });
+      toast.success(`Successfully paid the user.`, {
+        id: context?.toastId,
+      });
+    },
+    onError: (err: any, _, context) => {
+      toast.error("Transaction failed.", {
+        description: err.message || "Transaction failed",
+        id: context?.toastId,
+      });
+    },
+  });
+
+  const mutationReject = useMutation({
+    mutationFn: async (transactionData: Trans) => {
+      const res = await fetch("/api/admin/rejectincentive", {
+        method: "POST",
+        body: JSON.stringify(transactionData),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+      return data;
+    },
+    onMutate: () => {
+      const toastId = toast.loading(`Please wait...`);
+      return { toastId };
+    },
+    onSuccess: (data, _, context) => {
+      queryClient.invalidateQueries({ queryKey: ["alltransactions"] });
+      toast.success(`Payment request has been rejected.`, {
+        id: context?.toastId,
+      });
+    },
+    onError: (err: any, _, context) => {
+      toast.error("Transaction failed.", {
+        description: err.message || "Transaction failed",
+        id: context?.toastId,
+      });
+    },
+  });
+
+  // function to mutate the transaction table
+
+  function handlePaid(transaction: any) {
+    if (transaction?.user_id) {
+      mutationPaid.mutate({
+        id: transaction?.id,
+        user_id: transaction?.user_id,
+        user_type: transaction?.user_type,
+        amount: transaction?.amount,
+        status: "completed",
+      });
+    }
+    return toast.error("Something went wrong. Try again");
+  }
+
+  function handleReject(transaction: any) {
+    if (transaction?.user_id) {
+      mutationReject.mutate({
+        id: transaction?.id,
+        user_id: transaction?.user_id,
+        user_type: transaction?.user_type,
+        amount: transaction?.amount,
+        status: "completed",
+      });
+    }
+    return toast.error("Something went wrong. Try again");
+  }
+
+  //   Filter all the users
+
   const filteredUsers = useMemo(() => {
     if (!data) {
       console.log("Not data");
       return;
     }
-    let result = [...data?.data];
+    let result = [...data];
 
     if (search) {
       const lower = search.toLowerCase();
@@ -89,10 +193,11 @@ export default function Transactions({
 
   const columns: { label: string; key: keyof User }[] = [
     { label: "amount", key: "amount" },
-    { label: "UPI (G-Pay)", key: "upi_id" },
-    { label: "Acc holder name", key: "acc_holder_name" },
+    { label: "UPI ID (G-Pay)", key: "upi_id" },
+    { label: "Recipient", key: "acc_holder_name" },
     { label: "status", key: "status" },
-    { label: "withdraw date", key: "created_at" },
+    { label: "Date", key: "created_at" },
+    { label: "Action", key: "action" },
   ];
 
   const loadingDummy = [1, 2, 3, 4, 5];
@@ -147,6 +252,9 @@ export default function Transactions({
                 <TableCell>
                   <Skeleton className="h-6 w-[90px]" />
                 </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-[90px]" />
+                </TableCell>
               </TableRow>
             ))}
           {!isLoading &&
@@ -156,7 +264,13 @@ export default function Transactions({
                   {transaction?.amount}
                 </TableCell>
                 <TableCell>{transaction?.upi_id}</TableCell>
-                <TableCell>{transaction?.acc_holder_name}</TableCell>
+                <TableCell className="flex flex-col">
+                  {transaction?.acc_holder_name}{" "}
+                  <span className=" bg-gray-700 mt-2 text-white rounded-4xl shadow-sm text-[10px] w-fit px-2 py-1 ">
+                    {transaction?.user_type.charAt(0).toUpperCase() +
+                      transaction?.user_type?.slice(1)}
+                  </span>{" "}
+                </TableCell>
                 <TableCell>
                   <span
                     className={` ${
@@ -177,6 +291,26 @@ export default function Transactions({
                   </span>
                 </TableCell>
                 <TableCell>{formatDate(transaction.created_at)}</TableCell>
+                <TableCell className=" space-x-2">
+                  {transaction?.status === "pending" && (
+                    <Button
+                      className="text-[11px] bg-[#4CAE4F] cursor-pointer"
+                      onClick={() => handlePaid(transaction)}
+                    >
+                      Mark Paid
+                    </Button>
+                  )}
+
+                  {transaction?.status === "pending" && (
+                    <Button
+                      variant="destructive"
+                      className="text-[11px] cursor-pointer"
+                      onClick={() => handleReject(transaction)}
+                    >
+                      Reject
+                    </Button>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           {filteredUsers?.length === 0 && (

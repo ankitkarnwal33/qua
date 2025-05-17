@@ -22,14 +22,14 @@ export interface Client {
   refEmail: string;
   refCity: string;
   refPackage: string;
-  refGoal: string;
+  language: string;
   refNotes: string;
 }
 
 export default function RefferalForm({ id }: { id: string }) {
   const queryClient = useQueryClient();
   const [refPackage, setRefPackage] = useState("");
-  const [refGoal, setRefGoal] = useState("");
+  const [language, setLanguage] = useState("");
   const [refName, setRefName] = useState("");
   const [refEmail, setRefEmail] = useState("");
   const [refPhone, setRefPhone] = useState("");
@@ -84,7 +84,7 @@ export default function RefferalForm({ id }: { id: string }) {
       refPhone,
       refCity,
       refPackage,
-      refGoal,
+      language,
       refNotes,
     });
   }
@@ -157,37 +157,48 @@ export default function RefferalForm({ id }: { id: string }) {
 
         <div className="flex gap-5">
           <div className="flex flex-col gap-1 w-full">
-            <label htmlFor="refGoal">Goal</label>
-            <Select value={refGoal} onValueChange={setRefGoal}>
+            <label>Preffered Language</label>
+            <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger className="border-1 w-full py-4 text-[15px]">
-                <SelectValue placeholder="Select Goal" />
+                <SelectValue placeholder="Select Language" />
               </SelectTrigger>
               <SelectContent position="item-aligned">
                 <SelectGroup>
                   <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectItem value="Hindi">Hindi</SelectItem>
+                  <SelectItem value="English">English</SelectItem>
+                  <SelectItem value="Kannada">Kannada</SelectItem>
+                  <SelectItem value="Telugu">Telugu</SelectItem>
+                  <SelectItem value="Tamil">Tamil</SelectItem>
+                  <SelectItem value="Malayalam">Malayalam</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
           <div className="flex flex-col gap-1 w-full z-20">
-            <label htmlFor="refEmail">Select Package</label>
+            <label>Select Package</label>
             <Select value={refPackage} onValueChange={setRefPackage}>
               <SelectTrigger className="border-1 w-full py-4 text-[15px]">
                 <SelectValue placeholder="Select Package" />
               </SelectTrigger>
               <SelectContent position="item-aligned">
                 <SelectGroup>
-                  <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectLabel>Packages</SelectLabel>
+                  <SelectItem value="Genetic And Nutrition">
+                    Genetic And Nutrition
+                  </SelectItem>
+                  <SelectItem value="Pediatric Nutritionist In India">
+                    Pediatric Nutritionist In India
+                  </SelectItem>
+                  <SelectItem value="Medical Nutrition Therapy">
+                    Medical Nutrition Therapy
+                  </SelectItem>
+                  <SelectItem value="Weight Management">
+                    Weight Management
+                  </SelectItem>
+                  <SelectItem value="Qua International">
+                    Qua International
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

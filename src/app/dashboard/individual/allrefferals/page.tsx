@@ -39,7 +39,7 @@ const AllRefferals = () => {
   return (
     <DashContainer heading="My Refferals" subheading="">
       <PieChartComponent data={data} />
-      <ClientsTable data={data} isLoading={isLoading} />
+      <ClientsTable data={data} isLoading={isLoading} admin={false} />
     </DashContainer>
   );
 };

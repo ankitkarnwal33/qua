@@ -20,7 +20,6 @@ export async function TestimonialCarousel() {
   let res: any = [];
   try {
     res = await query("SELECT * FROM testimonials", []);
-    console.log(res);
     if (!res) {
       // Handle errors (e.g. throw to show Next.js error page)
       throw new Error("Failed to fetch posts");

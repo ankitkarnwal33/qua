@@ -2,6 +2,16 @@
 "use client";
 
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import {
   Table,
   TableBody,
   TableCell,
@@ -15,6 +25,9 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "./ui/skeleton";
 import formatDate from "@/lib/formatDate";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 type User = {
   id: number;
@@ -30,16 +43,50 @@ type User = {
 export default function UserTable({
   data,
   isLoading,
+  admin,
 }: {
   data: any;
   isLoading: boolean;
+  admin: boolean;
 }) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof User>("id");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`/api/user/destlead`, {
+        method: "DELETE",
+        body: JSON.stringify({ id }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+      return data;
+    },
+    onMutate: () => {
+      const toastId = toast.loading(`Deleting ...`);
+      return { toastId };
+    },
+    onSuccess: (data, _, context) => {
+      queryClient.invalidateQueries({ queryKey: ["allclients"] });
+      toast.success(`Lead Deleted.`, {
+        id: context?.toastId,
+      });
+      // Optionally reset fields here
+    },
+    onError: (err: any, _, context) => {
+      toast.error("Cannot delete the lead.", {
+        description: err.message || "Something went wrong.",
+        id: context?.toastId,
+      });
+    },
+  });
   const filteredUsers = useMemo(() => {
     if (!data) {
-      console.log("Not data");
+      // console.log("Not data");
       return;
     }
     let result = [...data];
@@ -105,6 +152,7 @@ export default function UserTable({
               "package",
               "status",
               "date",
+              "action",
             ].map((key) => (
               <TableHead key={key}>
                 <Button
@@ -146,6 +194,9 @@ export default function UserTable({
                 <TableCell>
                   <Skeleton className="h-6 w-[80px]" />
                 </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-[80px]" />
+                </TableCell>
               </TableRow>
             ))}
           {!isLoading &&
@@ -172,6 +223,37 @@ export default function UserTable({
                   </span>
                 </TableCell>
                 <TableCell>{formatDate(user.created_at)}</TableCell>
+                {admin && (
+                  <TableCell>
+                    <Dialog>
+                      <DialogTrigger className=" text-black border border-gray font-semibold py-1 px-2 rounded-sm cursor-pointer">
+                        Delete
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>
+                            You are deleting {user?.name}
+                          </DialogTitle>
+                          <DialogDescription>
+                            This will delete the lead from the database and this
+                            action cannot be undone. The lead will not be
+                            deleted from the superleap CRM.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                          <DialogClose>
+                            <Button
+                              variant={"destructive"}
+                              onClick={() => mutation.mutate(user?.id)}
+                            >
+                              Delete
+                            </Button>
+                          </DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           {filteredUsers?.length === 0 && (

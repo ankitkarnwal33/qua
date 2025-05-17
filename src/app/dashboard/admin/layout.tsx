@@ -12,6 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+
   async function handleLogout(event: React.MouseEvent) {
     event.preventDefault();
     try {
@@ -25,22 +26,24 @@ export default function RootLayout({
       console.log("Logout successful:", result);
       toast.success("Logged out");
       router.push("/");
-      // Optionally redirect or update UI
     } catch (error) {
       console.error("Logout error:", error);
-      // Optionally show user feedback (e.g., toast)
+      // Optionally show user feedback here
     }
   }
+
   return (
-    <SidebarProvider className="">
-      <div className="flex h-screen w-full ">
+    <SidebarProvider>
+      <div className="flex bg-white w-full">
         <AppSidebar />
-        <div className="flex-1 flex flex-col">
-          <header className="flex items instagram-center p-3 bg-white shadow justify-between items-center pr-10">
+
+        {/* Make this container and its main content shrink below their children’s min-width by adding `min-w-0` */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <header className="flex items-center p-3 bg-white shadow justify-between pr-10">
             <SidebarTrigger className="mr-4" />
             <div className="flex gap-4 items-center select-none gradient-2 px-4 py-1 rounded-2xl">
               <p
-                className=" text-[#4B5563] font-medium cursor-pointer"
+                className="text-[#4B5563] font-medium cursor-pointer"
                 onClick={handleLogout}
               >
                 Log out
@@ -50,7 +53,9 @@ export default function RootLayout({
               </div>
             </div>
           </header>
-          <main className="flex-1 overflow-scroll bg-[#F3F4F6] p-4 w-full h-full">
+
+          {/* Confine scrolling to this element by keeping `overflow-auto` here and `min-w-0` */}
+          <main className="flex-1 min-w-0 overflow-auto bg-[#F3F4F6] p-4 min-h-screen">
             {children}
           </main>
         </div>

@@ -39,7 +39,7 @@ export function AppSidebar() {
   );
   return (
     <Sidebar collapsible="icon" className="">
-      <SidebarHeader className="p-4">
+      <SidebarHeader className="p-4 bg-white">
         {open ? (
           <Link href={"/dashboard"}>
             <Image
@@ -66,7 +66,7 @@ export function AppSidebar() {
           </Link>
         )}
       </SidebarHeader>
-      <SidebarContent className="w-full">
+      <SidebarContent className="w-full bg-white">
         <SidebarGroup>
           <SidebarMenu>
             {navItems.map((item) => {

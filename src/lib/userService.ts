@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Client } from "@/components/RefferalForm";
 import { query } from "@/lib/db";
 
@@ -121,7 +122,7 @@ export const findUserByPhone = async (phone: string) => {
 
 export const saveClient = async (user: Client) => {
   try {
-    await query(
+    const result: any = await query(
       `INSERT INTO clients (referrer_id, name, email, phone, city, package_interested, goal, additional_msg)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
@@ -131,11 +132,12 @@ export const saveClient = async (user: Client) => {
         user.refPhone,
         user.refCity,
         user.refPackage,
-        user.refGoal,
+        user.language,
         user.refNotes,
       ]
     );
-    return "saved";
+    console.log();
+    return result?.insertId || null;
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
   }

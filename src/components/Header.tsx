@@ -103,22 +103,28 @@ const Header = () => {
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>
             Home
           </Link>
-          <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="#section-3" onClick={() => setMobileMenuOpen(false)}>
             How it works
           </Link>
           <Link href="/" onClick={() => setMobileMenuOpen(false)}>
             FAQs
           </Link>
-          <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+          <Link href={"/auth/login"} onClick={() => setMobileMenuOpen(false)}>
             Login
           </Link>
           <div>
             <div className="mb-1 font-medium">Register Now</div>
             <div className="flex flex-col border border-[#E2E8F0] rounded px-3 py-2">
-              <Link href="#" onClick={() => setMobileMenuOpen(false)}>
+              <Link
+                href={"/auth/signup"}
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Individual
               </Link>
-              <Link href="#" onClick={() => setMobileMenuOpen(false)}>
+              <Link
+                href={"/auth/signpart"}
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Partner
               </Link>
             </div>

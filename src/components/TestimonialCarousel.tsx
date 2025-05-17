@@ -20,6 +20,7 @@ export async function TestimonialCarousel() {
   let res: any = [];
   try {
     res = await query("SELECT * FROM testimonials", []);
+    console.log(res);
     if (!res) {
       // Handle errors (e.g. throw to show Next.js error page)
       throw new Error("Failed to fetch posts");
@@ -28,6 +29,7 @@ export async function TestimonialCarousel() {
     if (error instanceof Error) {
     }
   }
+
   return (
     <div className="w-full py-10">
       <h2 className="text-2xl font-bold text-center mb-10  text-[#2F2F2F]">
@@ -41,7 +43,7 @@ export async function TestimonialCarousel() {
         className="w-full max-w-6xl mx-auto px-5 sm:px-10 md:px-10"
       >
         <CarouselContent className="-ml-4">
-          {res.map(
+          {res?.map(
             (
               item: {
                 author: ReactNode;
@@ -116,7 +118,7 @@ export async function TestimonialCarousel() {
           )}
         </CarouselContent>
         <div className="flex justify-center gap-2 mt-4">
-          {res.map((_: any, i: Key | null | undefined) => (
+          {res?.map((_: any, i: Key | null | undefined) => (
             <div key={i} className="w-2 h-2 rounded-full bg-gray-300" />
           ))}
         </div>

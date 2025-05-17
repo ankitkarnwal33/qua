@@ -107,15 +107,15 @@ export default function Signup() {
       <div className=" gradient-3 flex items-center justify-center min-h-40">
         <FormContainer
           heading="Join as partner"
-          subheading="Grow your business with NutriLink Network"
+          subheading="Join Qua Nutrition Network to access personalized nutrition services."
         >
           <form
             action="#"
             method="POST"
-            className="bg-white p-10 rounded-sm shadow-sm flex flex-col gap-4 md:min-w-full"
+            className="bg-white px-4 py-10 sm:p-10 rounded-sm shadow-sm flex flex-col gap-4 md:min-w-full"
             onSubmit={handleSubmit}
           >
-            <div className="flex gap-4">
+            <div className="flex gap-4  flex-col sm:flex-row">
               <div className="flex flex-col gap-2">
                 <label htmlFor="name" className=" text-[#020817]">
                   Business/Brand Name
@@ -139,7 +139,7 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-col sm:flex-row">
               <div className="flex flex-col gap-2">
                 <label htmlFor="email" className=" text-[#020817]">
                   Email
@@ -163,19 +163,19 @@ export default function Signup() {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
               <label htmlFor="password" className=" text-[#020817]">
                 Password
               </label>
               <input
                 type="text"
                 placeholder="password"
-                className=" border border-[#E2E8F0] px-3 py-2 rounded-sm  text-[#64748B]"
+                className=" border border-[#E2E8F0] px-3 py-2 rounded-sm sm:w-full  text-[#64748B]"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4  sm:items-center flex-col sm:flex-row">
               <div className="flex flex-col gap-2">
                 <label htmlFor="city" className=" text-[#020817]">
                   City

@@ -155,7 +155,7 @@ export default function Signup() {
           <form
             action="#"
             method="POST"
-            className="bg-white p-10 rounded-sm shadow-sm flex flex-col gap-4 md:min-w-full"
+            className="bg-white px-4 py-6 sm:p-10 rounded-sm shadow-sm flex flex-col gap-4 md:min-w-full"
             onSubmit={handleSubmit}
           >
             <div className="flex flex-col gap-2">

@@ -33,7 +33,7 @@ export default function RootLayout({
   }
   return (
     <SidebarProvider className="">
-      <div className="flex h-screen w-full">
+      <div className="flex h-screen bg-amber-300 w-full">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
           <header className="flex items instagram-center p-3 bg-white shadow justify-between items-center pr-10">
@@ -50,7 +50,7 @@ export default function RootLayout({
               </div>
             </div>
           </header>
-          <main className="flex-1 overflow-auto bg-[#F3F4F6] p-4 w-full h-full">
+          <main className="flex-1 overflow-auto bg-[#F3F4F6] p-4 w-full min-h-screen">
             {children}
           </main>
         </div>
